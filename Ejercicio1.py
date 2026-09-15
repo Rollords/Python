@@ -28,7 +28,8 @@ def app():
     while nombre_carrito:
 
         nombre = input('Que nombre le quieres poner a tu carrito de compras? :D \n')
-        print(f'Lista de productos : {productos.keys()}')
+        for producto in productos.keys():
+            print(producto)
 
         if nombre:
 
@@ -45,7 +46,7 @@ def agregar_producto():
     print('Estas en tu carrito', inventario['nombre'],' que compraras hoy? :D')
 
     while True:
-        producto= input('Que producto vas a agregar?, escribe "fin" para terminar de comprar:\n').strip()
+        producto= input('Que producto vas a agregar?, escribe "fin" para terminar de comprar:').strip()
 
         if producto.lower()== 'fin':
             break
