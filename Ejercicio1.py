@@ -6,21 +6,22 @@ inventario = {}
 inventario['productos'] = []
 cuenta = []
 
-productos = {
-    'leche': 10,
-    'huevo': 5,
-    'pollo': 20,
-    'carne': 25,
-    'queso': 7,
-    'caraota': 5,
-    'pescado': 20,
-    'refresco': 10,
-    'agua': 3,
-    'manzana': 5,
-    'pera': 7,
-    'cambur': 10,
-    'platano': 5,
-}
+productos =[
+    {'id': 0, 'nombre':'leche','precio': 10},
+    {'id': 1,'nombre':'huevo','precio': 5},
+    {'id': 2,'nombre':'pollo','precio': 20},
+    {'id': 3,'nombre':'carne','precio': 25},
+    {'id': 4,'nombre':'queso','precio': 7},
+    {'id': 5,'nombre':'caraota','precio': 5},
+    {'id': 6,'nombre':'pescado','precio': 20},
+    {'id': 7,'nombre':'refresco','precio': 10},
+    {'id': 8,'nombre':'agua','precio': 3},
+    {'id': 9,'nombre':'manzana','precio': 5},
+    {'id': 10,'nombre':'pera','precio': 7},
+    {'id': 11,'nombre':'cambur','precio': 10},
+    {'id': 12,'nombre':'platano','precio': 5}
+    ]
+    
 def app():
 
     nombre_carrito= True
@@ -28,8 +29,8 @@ def app():
     while nombre_carrito:
 
         nombre = input('Que nombre le quieres poner a tu carrito de compras? :D \n')
-        for producto in productos.keys():
-            print(producto)
+        for producto in productos:
+            print(f'ID: {producto['id']} - {producto['nombre']} precio: {producto['precio']}$')
 
         if nombre:
 
@@ -51,8 +52,11 @@ def agregar_producto():
         if producto.lower()== 'fin':
             break
 
-        if producto in productos.keys():
-            cuenta.append(productos[producto])
+        for articulo in productos:
+            if articulo['nombre'] == producto:
+                print(producto)
+                cuenta.append(articulo['precio'])
+                break
         inventario['productos'].append(producto)
         print(f'Producto agregado:{producto}\n')
 
