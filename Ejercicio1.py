@@ -1,5 +1,3 @@
-#Crea un programa que permita registrar productos en una lista dentro de un diccionario llamado inventario. 
-#El usuario debe poder ingresar nombres de productos de forma continua hasta que escriba la palabra "fin" (sin importar si la escribe en mayúsculas o minúsculas). Al finalizar, muestra el total de productos registrados.
 
 inventario = {}
 
@@ -53,12 +51,17 @@ def agregar_producto():
             break
 
         for articulo in productos:
-            if articulo['nombre'] == producto:
-                print(producto)
+            if producto.isdigit() and articulo['id'] == int(producto):
+                nombre_producto = articulo['nombre']
                 cuenta.append(articulo['precio'])
+                inventario['productos'].append(nombre_producto)
+                print(f'Producto agregado: {nombre_producto}\n')
                 break
-        inventario['productos'].append(producto)
-        print(f'Producto agregado:{producto}\n')
+            elif articulo['nombre'].lower() == producto.lower():
+                cuenta.append(articulo['precio'])
+                inventario['productos'].append(articulo['nombre'])
+                print(f'Producto agregado: {articulo["nombre"]}\n')
+                break
 
     print('Carrito Completo')
     
