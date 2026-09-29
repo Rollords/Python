@@ -4,6 +4,8 @@ inventario = {}
 inventario['productos'] = []
 cuenta = []
 
+
+
 productos =[
     {'id': 0, 'nombre':'leche','precio': 10},
     {'id': 1,'nombre':'huevo','precio': 5},
@@ -62,16 +64,21 @@ def agregar_producto():
                 inventario['productos'].append(articulo['nombre'])
                 print(f'Producto agregado: {articulo["nombre"]}\n')
                 break
-
+    
     print('Carrito Completo')
     
 
 def mostrar_producto():
+    sub_total = sum(cuenta)
+    iva= sub_total * 0.16
+    total = round(sub_total+iva, 2)
     print(f'Productos en el carrito:', len(inventario['productos']),'\r\n')
     
 
     for producto in inventario['productos']:
         print(producto)
-    print(f'Total: {sum(cuenta)}$ a pagar') 
+    print(f'Sub_Total: {sub_total}$ a pagar') 
+    print(f'I.V.A: {iva}$ a pagar (16%)') 
+    print(f'Total: {total}$ a pagar') 
 app() 
 

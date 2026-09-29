@@ -6,8 +6,7 @@ nombre_curso = input("Ingresa el nombre del curso: ")
 
 curso = {
     "nombre": nombre_curso,
-    "alumnos": [],
-    "notas": []
+    "alumnos": []
 }
 
 print("\n--- Registro de Alumnos ---")
@@ -20,27 +19,23 @@ while True:
         break
     
     if nombre_alumno:
-        calificaciones= {
-            'matematica' : '',
-            'quimica' : '',
-            'fisica' : '',
-            'ingles' : '',
-            'geografia' : ''
-        }
-        alumno_notas = []
-        for materia in calificaciones:
+        materias= ['Matematica','Quimica','Fisica','Ingles']
+        calificaciones = {}
+
+        for materia in materias:
             nota = int(input(f'¿Cuál fue la calificación de {nombre_alumno} en {materia}?: '))
             calificaciones[materia] = nota
-            alumno_notas.append(nota)
+
+            total_notas = sum(calificaciones.values()) / len(calificaciones)
 
         alumno_datos = {
-            "nombre": nombre_alumno,
-            "calificaciones": calificaciones
+            "Nombre": nombre_alumno,
+            "Calificaciones": calificaciones,
+            "Promedio" : total_notas
         }
-        suma = sum(alumno_notas)
-        total = suma / len(alumno_notas)
+
+        
         curso["alumnos"].append(alumno_datos)
-        curso["notas"].append(total)
 
 
 print("\n" + "="*30)
