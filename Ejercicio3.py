@@ -125,7 +125,6 @@ def biblioteca ():
             print("2. Pedir un libro")
             print("3. Devolver un libro")
             print("4. Ver historial de préstamos")
-            print("5. Salir")
             
             opcion = input("\nSeleccione una opción (1-5): ").strip()
 
@@ -154,6 +153,10 @@ def biblioteca ():
                     if entrada == "salir":
                         print("\nVolviendo al menú principal...\n")
                         break
+                        
+                    if not entrada.isdigit():
+                        print("\n❌❌❌ Entrada Invalida ❌❌❌ Volveras al Menu\n")
+                        break
 
                     pedir_id = int(entrada)
                     encontrado = False
@@ -162,7 +165,7 @@ def biblioteca ():
                             if libro["id"] == pedir_id and libro["activo"] == "Disponible":
                                 libro["activo"] = "Prestado"
                                 inventario["libros"].append(libro)
-                                print(f"\nHas pedido pedido: '{libro['titulo']}'\n")
+                                print(f"\nHas pedido: '{libro['titulo']}'\n")
                                 encontrado = True
                                 break
                     if not encontrado:
@@ -184,10 +187,11 @@ def biblioteca ():
                         if libro["id"] == devolver_libro:
                             libro["activo"] = "Disponible"
                             inventario["libros"].remove(libro)
-                            print(f"\nHas pedido Devuelto: '{libro['titulo']}'\n")
-                        else:
-                            print("\n❌Escribe un ID valido\n")
-                        break
+                            print(f"\nHas Devuelto: '{libro['titulo']}'\n")
+                            break
+                    else:
+                        print("\n❌ El ID ingresado no está disponible.\n")
+    
 
             elif opcion == "4":
                 print(f'\nUsuario: {nombre} - Cedula: {cedula}.')
