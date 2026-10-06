@@ -133,8 +133,8 @@ def biblioteca ():
                 for i , libro in enumerate(libros_tupla):
                     if libro['activo'] == 'Disponible':
                         print(f'{i} - {libro['titulo']} Autor: {libro['autor']} - Status {libro['activo']}')
-                salir = input(f'\nPresione "0" para volver al menu \n')
-                if salir == '0':
+                salir = input(f'\nEscribe "salir" para volver al menu \n')
+                if salir == 'salir':
                     print('\n')
                     menu()
                     break
@@ -143,7 +143,7 @@ def biblioteca ():
                     disponibles = [lib for lib in libros_tupla if lib["activo"] == "Disponible"]
                     
                     if not disponibles:
-                        print("\n⚠️ Ya no hay más libros disponibles en la biblioteca.\n")
+                        print("\nYa no hay más libros disponibles en la biblioteca.\n")
                         break
 
                     for lib in disponibles:
@@ -169,8 +169,25 @@ def biblioteca ():
                         print("\n❌ El ID ingresado no está disponible o ya cumpliste tu cuota de 3 libros.\n")
 
             elif opcion == "3":
-                
-                break
+                while True:
+                    for lib in inventario['libros']:
+                        print(f"ID: {lib['id']} - {lib['titulo']} ({lib['categoria']})")
+
+                    text = input("\nIngresa el ID del libro que deseas devolver (o escribe 'salir' para salir al menú): ")
+                    if text == 'salir':
+                        print("\nVolviendo al menú principal...\n")
+                        break
+
+                    devolver_libro = int(text)
+
+                    for libro in inventario["libros"]:
+                        if libro["id"] == devolver_libro:
+                            libro["activo"] = "Disponible"
+                            inventario["libros"].remove(libro)
+                            print(f"\nHas pedido Devuelto: '{libro['titulo']}'\n")
+                        else:
+                            print("\n❌Escribe un ID valido\n")
+                        break
 
             elif opcion == "4":
                 print(f'\nUsuario: {nombre} - Cedula: {cedula}.')
