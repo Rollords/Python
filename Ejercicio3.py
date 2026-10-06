@@ -7,7 +7,7 @@ libros_tupla = [
         "ano": 2005,
         "editorial": "Cátedra",
         "categoria": "Novela",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@ libros_tupla = [
         "ano": 2001,
         "editorial": "Planeta",
         "categoria": "Misterio",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@ libros_tupla = [
         "ano": 2007,
         "editorial": "Random House",
         "categoria": "Realismo mágico",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@ libros_tupla = [
         "ano": 1951,
         "editorial": "Salamandra",
         "categoria": "Fábula",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 4,
@@ -47,7 +47,7 @@ libros_tupla = [
         "ano": 2003,
         "editorial": "Planeta",
         "categoria": "Thriller",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 5,
@@ -57,7 +57,7 @@ libros_tupla = [
         "ano": 1988,
         "editorial": "Grijalbo",
         "categoria": "Ficción",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 6,
@@ -67,7 +67,7 @@ libros_tupla = [
         "ano": 2010,
         "editorial": "Plaza & Janés",
         "categoria": "Novela",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 7,
@@ -77,7 +77,7 @@ libros_tupla = [
         "ano": 2014,
         "editorial": "Debate",
         "categoria": "Historia",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 8,
@@ -87,7 +87,7 @@ libros_tupla = [
         "ano": 1937,
         "editorial": "Minotauro",
         "categoria": "Fantasía",
-        "activo": True
+        "activo": 'Disponible'
     },
     {
         "id": 9,
@@ -97,32 +97,92 @@ libros_tupla = [
         "ano": 1995,
         "editorial": "Alfaguara",
         "categoria": "Ficción",
-        "activo": True
+        "activo": 'Disponible'
     }
 ]
 
 datos = ['nombre', 'apellido','cedula','correo']
+resultado = {}
 
 inventario = {
-    'datos_usuario': datos,
+    'datos_usuario': resultado,
     'libros': [],
 }
 
 
 
 def biblioteca ():
-    libros_elegidos = True
-    usuario= {}
-    while libros_elegidos:
-        for dato in datos:
-            texto = input(f'Cual es tu {dato}: ').strip()
-            usuario[dato] = texto
-        print(f'Hola {usuario['nombre']} bienvenido a la Biblioteca a continuacion veras una lista de los libros que tenemos para ti : \n')
+    for dato in datos :
+        resultado[dato] = input(f'Cual es tu {dato}: ')
+       
+    print(f'\nBienvenido {inventario["datos_usuario"]['nombre']} que deseas hacer: \n')
+    cedula = inventario["datos_usuario"]['cedula']
+    nombre = inventario["datos_usuario"]['nombre']
 
+    def menu():
+        while True:
+            print("1. Ver todos los libros")
+            print("2. Pedir un libro")
+            print("3. Devolver un libro")
+            print("4. Ver historial de préstamos")
+            print("5. Salir")
+            
+            opcion = input("\nSeleccione una opción (1-5): ").strip()
 
-        for libro in libros_tupla:               
-            print(f'ID: {libro['id']} - {libro['titulo']} - Autor: {libro['autor']} - Categoria: {libro['categoria']}')
+            if opcion == "1":
+                for i , libro in enumerate(libros_tupla):
+                    if libro['activo'] == 'Disponible':
+                        print(f'{i} - {libro['titulo']} Autor: {libro['autor']} - Status {libro['activo']}')
+                salir = input(f'\nPresione "0" para volver al menu \n')
+                if salir == '0':
+                    print('\n')
+                    menu()
+                    break
+            elif opcion == "2":
+                while True:
+                    disponibles = [lib for lib in libros_tupla if lib["activo"] == "Disponible"]
+                    
+                    if not disponibles:
+                        print("\n⚠️ Ya no hay más libros disponibles en la biblioteca.\n")
+                        break
 
-        elegir = input(f'Que libro deseas agregar (maximo 3 libros)')
+                    for lib in disponibles:
+                        print(f"ID: {lib['id']} - {lib['titulo']} ({lib['categoria']})")
 
+                    entrada = input("\nIngresa el ID del libro que deseas pedir (o escribe 'salir' para salir al menú): ")
+
+                    if entrada == "salir":
+                        print("\nVolviendo al menú principal...\n")
+                        break
+
+                    pedir_id = int(entrada)
+                    encontrado = False
+                    if len(inventario['libros']) <= 2 :
+                        for libro in libros_tupla:
+                            if libro["id"] == pedir_id and libro["activo"] == "Disponible":
+                                libro["activo"] = "Prestado"
+                                inventario["libros"].append(libro)
+                                print(f"\nHas pedido pedido: '{libro['titulo']}'\n")
+                                encontrado = True
+                                break
+                    if not encontrado:
+                        print("\n❌ El ID ingresado no está disponible o ya cumpliste tu cuota de 3 libros.\n")
+
+            elif opcion == "3":
+                
+                break
+
+            elif opcion == "4":
+                print(f'\nUsuario: {nombre} - Cedula: {cedula}.')
+                for titulo in inventario['libros']:
+                    print(titulo['titulo'])
+                print(f'Posee: {len(inventario['libros'])} en su poder.\n')
+
+                print("\n--- VOLVIENDO AL MENU ---\n")
+                menu()
+                break
+            else:
+                print(f'\n❌ Opción no válida. Intente de nuevo. \n')
+    menu()
+        
 biblioteca()
